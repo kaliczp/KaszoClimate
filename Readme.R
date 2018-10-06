@@ -26,3 +26,13 @@ ttnames <- names(my_data.xts)
 tti <- 1
 
 plot(my_data.xts[,tti], main=ttnames[tti]);tti <- tti+1
+
+beolv_boreasxls <- function(file) {
+    require(xts)
+    require(readxl)
+    tbl_data <- read_xls(file, range=cell_cols("A:T"))
+    df_data <- as.data.frame(tbl_data)
+    xts(df_data[,-1],df_data[,1])
+}
+
+plot(ttbeolv2[,tti], main=ttnames[tti]);tti <- tti+1

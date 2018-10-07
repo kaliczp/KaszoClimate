@@ -1,4 +1,5 @@
 ## Telepítendő csomagok: xts readxl
+.First <- function(){Sys.setenv(TZ='UTC')}
 
 ## A meteorológiai állomás 10 perces elemi adatai, illetve az azokból képzett
 ## statisztikák innen tölthetők le:
@@ -25,3 +26,11 @@ for(tti in 1:length(ttfile))
 ttnames <- names(rawlist[[1]])
 ttname <- 1
 plot(rawlist[[tti]][,ttname], main=ttnames[ttname]);ttname <- ttname+1
+
+## Napi csapadék és napsütés összeg
+tt1 <- apply.daily(rawlist[[1]][,11], sum)
+tt2 <- apply.daily(rawlist[[1]][,19], sum)
+## Napi átlagok
+tt3 <- apply.daily(rawlist[[1]][,-c(11,13:19)], mean)
+## Összefűzés
+merge.xts(tt1,tt2,tt3)

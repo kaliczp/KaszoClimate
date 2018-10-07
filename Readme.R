@@ -16,7 +16,12 @@ beolv_boreasxls <- function(file) {
     xts(df_data[,-1],df_data[,1])
 }
 
-ttbeolv2 <- beolv_boreasxls(ttfile[2])
-ttnames <- names(ttbeolv2)
+## Minden excel egy listába
+rawlist <- list()
+for(tti in 1:length(ttfile))
+    rawlist[[tti]] <- beolv_boreasxls(ttfile[tti])
 
-plot(ttbeolv2[,tti], main=ttnames[tti]);tti <- tti+1
+## tti listaelem kirajzolása
+ttnames <- names(rawlist[[1]])
+ttname <- 1
+plot(rawlist[[tti]][,ttname], main=ttnames[ttname]);ttname <- ttname+1

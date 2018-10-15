@@ -27,6 +27,8 @@ ttnames <- names(rawlist[[1]])
 ttname <- 1
 plot(rawlist[[tti]][,ttname], main=ttnames[ttname]);ttname <- ttname+1
 
+## Hibák javítása Improvement.R fájlban.
+
 tti <- 1
 ## Napi csapadék és napsütés összeg
 tt1 <- apply.daily(rawlist[[tti]][,11], sum)

@@ -28,9 +28,9 @@ ttname <- 1
 plot(rawlist[[tti]][,ttname], main=ttnames[ttname]);ttname <- ttname+1
 
 ## Napi csapadék és napsütés összeg
-tt1 <- apply.daily(rawlist[[1]][,11], sum)
-tt2 <- apply.daily(rawlist[[1]][,19], sum)
+tt1 <- apply.daily(rawlist[[tti]][,11], sum)
+tt2 <- apply.daily(rawlist[[tti]][,19], sum)
 ## Napi átlagok
-tt3 <- apply.daily(rawlist[[1]][,-c(11,13:19)], mean)
+tt3 <- apply.daily(rawlist[[tti]][,-c(5,7:19)], mean)
 ## Összefűzés
-merge.xts(tt1,tt2,tt3)
+ttdaily <- merge.xts(tt1,tt2,tt3)

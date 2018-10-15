@@ -27,10 +27,21 @@ ttnames <- names(rawlist[[1]])
 ttname <- 1
 plot(rawlist[[tti]][,ttname], main=ttnames[ttname]);ttname <- ttname+1
 
+tti <- 1
 ## Napi csapadék és napsütés összeg
 tt1 <- apply.daily(rawlist[[tti]][,11], sum)
 tt2 <- apply.daily(rawlist[[tti]][,19], sum)
 ## Napi átlagok
 tt3 <- apply.daily(rawlist[[tti]][,-c(5,7:19)], mean)
 ## Összefűzés
-ttdaily <- merge.xts(tt1,tt2,tt3)
+daily <- merge.xts(tt1,tt2,tt3)
+
+for(tti in 2:length(rawlist)){
+## Napi csapadék és napsütés összeg
+tt1 <- apply.daily(rawlist[[tti]][,11], sum)
+tt2 <- apply.daily(rawlist[[tti]][,19], sum)
+## Napi átlagok
+tt3 <- apply.daily(rawlist[[tti]][,-c(5,7:19)], mean)
+## Összefűzés
+daily <- c(daily, merge.xts(tt1,tt2,tt3))
+}

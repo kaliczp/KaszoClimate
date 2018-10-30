@@ -35,7 +35,7 @@ tti <- 1
 tt1 <- apply.daily(rawlist[[tti]][,11], sum)
 tt2 <- apply.daily(rawlist[[tti]][,19], sum)
 ## Napi átlagok
-tt3 <- apply.daily(rawlist[[tti]][,-c(5,7:19)], mean)
+tt3 <- apply.daily(rawlist[[tti]][,-c(5,7:16,18:19)], mean)
 ## Összefűzés
 daily <- merge.xts(tt1,tt2,tt3)
 
@@ -44,7 +44,7 @@ for(tti in 2:length(rawlist)){
 tt1 <- apply.daily(rawlist[[tti]][,11], sum)
 tt2 <- apply.daily(rawlist[[tti]][,19], sum)
 ## Napi átlagok
-tt3 <- apply.daily(rawlist[[tti]][,-c(5,7:19)], mean)
+tt3 <- apply.daily(rawlist[[tti]][,-c(5,7:16,18:19)], mean)
 ## Összefűzés
 daily <- c(daily, merge.xts(tt1,tt2,tt3))
 }

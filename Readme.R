@@ -48,3 +48,16 @@ tt3 <- apply.daily(rawlist[[tti]][,-c(5,7:16,18:19)], mean)
 ## Összefűzés
 daily <- c(daily, merge.xts(tt1,tt2,tt3))
 }
+
+### Csapadék
+## Teljes sor
+plot(daily[,1], type="h")
+## Éves összeg kontroll
+apply.yearly(daily[,1],sum)
+## Havi összegek az elemzéshez
+prec.month <- apply.monthly(daily[,1],sum)
+plot(prec.month, type="h")
+
+## Hőmérséklet
+## Napi átlag lefutása
+plot(daily[,3])

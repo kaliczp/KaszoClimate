@@ -36,8 +36,13 @@ tt1 <- apply.daily(rawlist[[tti]][,11], sum)
 tt2 <- apply.daily(rawlist[[tti]][,19], sum)
 ## Napi átlagok
 tt3 <- apply.daily(rawlist[[tti]][,-c(5,7:16,18:19)], mean)
+## Napi min és max hőmérséklet
+tt4 <- apply.daily(rawlist[[tti]][,1], min)
+names(tt4) <- "Temp-min"
+tt5 <- apply.daily(rawlist[[tti]][,1], max)
+names(tt4) <- "Temp-max"
 ## Összefűzés
-daily <- merge.xts(tt1,tt2,tt3)
+daily <- merge.xts(tt1,tt2,tt3,tt4,tt5)
 
 for(tti in 2:length(rawlist)){
 ## Napi csapadék és napsütés összeg
@@ -45,8 +50,13 @@ tt1 <- apply.daily(rawlist[[tti]][,11], sum)
 tt2 <- apply.daily(rawlist[[tti]][,19], sum)
 ## Napi átlagok
 tt3 <- apply.daily(rawlist[[tti]][,-c(5,7:16,18:19)], mean)
+## Napi min és max hőmérséklet
+tt4 <- apply.daily(rawlist[[tti]][,1], min)
+names(tt4) <- "Temp-min"
+tt5 <- apply.daily(rawlist[[tti]][,1], max)
+names(tt4) <- "Temp-max"
 ## Összefűzés
-daily <- c(daily, merge.xts(tt1,tt2,tt3))
+daily <- c(daily, merge.xts(tt1,tt2,tt3,tt4,tt5))
 }
 
 ### Csapadék
@@ -60,4 +70,5 @@ plot(prec.month, type="h")
 
 ## Hőmérséklet
 ## Napi átlag lefutása
-plot(daily[,3])
+plot(daily[, 3])
+## Minimum-maximum kell-e?

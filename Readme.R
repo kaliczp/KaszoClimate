@@ -40,7 +40,7 @@ tt3 <- apply.daily(rawlist[[tti]][,-c(5,7:16,18:19)], mean)
 tt4 <- apply.daily(rawlist[[tti]][,1], min)
 names(tt4) <- "Temp-min"
 tt5 <- apply.daily(rawlist[[tti]][,1], max)
-names(tt4) <- "Temp-max"
+names(tt5) <- "Temp-max"
 ## Összefűzés
 daily <- merge.xts(tt1,tt2,tt3,tt4,tt5)
 
@@ -54,7 +54,7 @@ tt3 <- apply.daily(rawlist[[tti]][,-c(5,7:16,18:19)], mean)
 tt4 <- apply.daily(rawlist[[tti]][,1], min)
 names(tt4) <- "Temp-min"
 tt5 <- apply.daily(rawlist[[tti]][,1], max)
-names(tt4) <- "Temp-max"
+names(tt5) <- "Temp-max"
 ## Összefűzés
 daily <- c(daily, merge.xts(tt1,tt2,tt3,tt4,tt5))
 }

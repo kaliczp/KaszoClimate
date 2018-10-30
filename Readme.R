@@ -28,6 +28,7 @@ ttname <- 1
 plot(rawlist[[tti]][,ttname], main=ttnames[ttname]);ttname <- ttname+1
 
 ## Hibák javítása Improvement.R fájlban.
+## Itt kell futtatni a külön vett javításokat!
 
 tti <- 1
 ## Napi csapadék és napsütés összeg

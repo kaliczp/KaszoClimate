@@ -70,5 +70,8 @@ plot(prec.month, type="h")
 
 ## Hőmérséklet
 ## Napi átlag lefutása
-plot(daily[, 3])
-## Minimum-maximum kell-e?
+plot(daily[, "Temp.2m.C"])
+## Minimum-maximum is rajta
+plot(daily[, "Temp.2m.C"], ylim = c(min(daily[, "Temp.min"]), max(daily[, "Temp.max"])))
+lines(daily[, "Temp.min"])
+lines(daily[, "Temp.max"])

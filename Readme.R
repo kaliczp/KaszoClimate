@@ -79,3 +79,5 @@ lines(daily[, "Temp.max"],col="black")
 
 ## Indexeles
 plot(daily['2015-10-01/2016-09-30',1], type="h")
+## Hidrologiai ev osszeg
+sum(daily['2015-10-01/2016-09-30',1])

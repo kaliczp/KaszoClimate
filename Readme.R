@@ -67,6 +67,7 @@ apply.yearly(daily[,1],sum)
 ## Havi összegek az elemzéshez
 prec.month <- apply.monthly(daily[,1],sum)
 plot(prec.month, type="h")
+write.zoo(daily[,1], file = "KaszoNapiCsapi.csv", dec = ",")
 
 ## Hőmérséklet
 ## Napi átlag lefutása

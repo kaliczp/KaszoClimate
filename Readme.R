@@ -67,11 +67,14 @@ apply.yearly(daily[,1],sum)
 ## Havi összegek az elemzéshez
 prec.month <- apply.monthly(daily[,1],sum)
 plot(prec.month, type="h")
+## Napi adatsor mentése
 write.zoo(daily[,1], file = "KaszoNapiCsapi.csv", dec = ",")
 
 ## Hőmérséklet
 ## Napi átlag lefutása
 plot(daily[, "Temp.2m.C"])
+## Napi adatsor mentése
+write.zoo(round(daily[, "Temp.2m.C"],2), file = "KaszoNapiTemp.csv", dec = ",")
 ## Minimum-maximum is rajta
 plot(daily[, "Temp.2m.C"], ylim = c(min(daily[, "Temp.min"]), max(daily[, "Temp.max"])))
 lines(daily[, "Temp.min"])

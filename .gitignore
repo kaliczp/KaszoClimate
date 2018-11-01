@@ -2,3 +2,5 @@
 Excels/
 *~
 *#
+.Rproj.user
+*.Rproj

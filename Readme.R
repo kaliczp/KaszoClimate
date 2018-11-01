@@ -63,6 +63,7 @@ daily <- c(daily, merge.xts(tt1,tt2,tt3,tt4,tt5))
 ## Teljes sor
 plot(daily[,1], type="h")
 ## Éves összeg kontroll
+
 apply.yearly(daily[,1],sum)
 ## Havi összegek az elemzéshez
 prec.month <- apply.monthly(daily[,1],sum)
@@ -76,6 +77,11 @@ plot(daily[, "Temp.2m.C"])
 ## Napi adatsor mentése
 write.zoo(round(daily[, "Temp.2m.C"],2), file = "KaszoNapiTemp.csv", dec = ",")
 ## Minimum-maximum is rajta
-plot(daily[, "Temp.2m.C"], ylim = c(min(daily[, "Temp.min"]), max(daily[, "Temp.max"])))
-lines(daily[, "Temp.min"])
-lines(daily[, "Temp.max"])
+plot(daily[, "Temp.2m.C"], ylim = c(min(daily[, "Temp.min"]), max(daily[, "Temp.max"])), col="ivory4")
+lines(daily[, "Temp.min"],col="ivory2")
+lines(daily[, "Temp.max"],col="black")
+
+## Indexeles
+plot(daily['2015-10-01/2016-09-30',1], type="h")
+## Hidrologiai ev osszeg
+sum(daily['2015-10-01/2016-09-30',1])

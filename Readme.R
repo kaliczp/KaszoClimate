@@ -7,7 +7,7 @@
 ## wgettel leszedve az Excels könyvtárba letolt.txt letolt2.txt
 
 # xls files
-ttfile <- dir("Excels", patt="xls", full.names=TRUE)
+ttfile <- dir("Excels", patt="[0-9].xls", full.names=TRUE)
 
 beolv_boreasxls <- function(file) {
     require(xts)
@@ -62,6 +62,26 @@ daily <- c(daily, merge.xts(tt1,tt2,tt3,tt4,tt5))
 ### Csapadék
 ## Teljes sor
 plot(daily[,1], type="h")
+
+## Az ideiglenes beolvasás törlése (memória takarékosság miatt)
+rm(rawlist)
+
+## Kiegészítés teljes adatsorrá
+## csv beolvasás
+ttpotlas <- read.csv2("KaszoPotlas.csv")
+## Dátum karakter formázás
+ttpotlas[,1] <- gsub("\\.", "-", as.character(ttpotlas[,1]))
+## Üres mátrix a megfelelő sor, oszlopszámmal
+ttpotlasjav <- matrix(NA, nrow=nrow(ttpotlas), ncol=ncol(coredata(daily[1])))
+## Nevek létrehozása
+colnames(ttpotlasjav) <- colnames(coredata(daily[1]))
+## Adatok bemásolása a megfelelő helyrre
+ttpotlasjav[,c(3,1)] <- as.matrix(ttpotlas[,-1])
+## xts létrehozása
+ttpotlasjav.xls <- xts(ttpotlasjav, as.POSIXct(paste0(ttpotlas[,1]," 23:50:00")))
+## Az idősor kiegészítése
+daily <- c(ttpotlasjav.xls, daily)
+
 ## Éves összeg kontroll
 
 apply.yearly(daily[,1],sum)
@@ -116,4 +136,3 @@ sum(daily['2017-04-01/2017-09-30',1] > 20)
 sum(daily['2018-04-01/2018-09-30',1] > 20)
 # minimum h
 lines(daily['2018-04-01/2018-09-30', "Temp.min"],col="ivory2")
-

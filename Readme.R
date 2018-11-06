@@ -91,6 +91,7 @@ plot(prec.month, type="h")
 ## Napi adatsor mentése
 write.zoo(daily[,1], file = "KaszoNapiCsapi.csv", dec = ",")
 
+
 ## Hőmérséklet
 ## Napi átlag lefutása
 plot(daily[, "Temp.2m.C"])
@@ -109,10 +110,14 @@ sum(daily['2015-10-01/2016-09-30',1])
 sum(daily['2016-10-01/2017-09-30',1])
 sum(daily['2017-10-01/2018-09-30',1])
 
-plot(daily['2014-10-01/2015-09-30',1], type = "h")
+plot(daily['2014-10-01/2015-09-30',1],major.ticks="months",type = "h")
 plot(daily['2015-10-01/2016-09-30',1], type = "h")
 plot(daily['2016-10-01/2017-09-30',1], type = "h")
-plot(daily['2017-10-01/2018-09-30',1], type = "h")
+plot(daily['2017-10-01/2018-09-30',1], type = "h", main="", yaxis.sname=FALSE, on=NA)
+title("Napi csapadék és átlaghőmérséklet alakulása", sub= "2014-15 hidrológiai év")
+?plot.xts
+plot(index(daily['2017-10-01/2018-09-30']),coredata(daily['2017-10-01/2018-09-30',1]),type="h",ylab="",xlab="")
+axis.POSIXct()
 
 sum(daily['2014-10-01/2015-09-30',1]  > 20)
 sum(daily['2015-10-01/2016-09-30',1]  > 20)
@@ -135,4 +140,28 @@ sum(daily['2016-04-01/2016-09-30',1] > 20)
 sum(daily['2017-04-01/2017-09-30',1] > 20)
 sum(daily['2018-04-01/2018-09-30',1] > 20)
 # minimum h
-lines(daily['2018-04-01/2018-09-30', "Temp.min"],col="ivory2")
+lines(daily['2018-04-01/2018-09-30', "Temp.min"],col="ivory4")
+
+##havi hőm
+apply.monthly(daily[,"Temp.2m.C"],mean)
+monthly.full<-apply.monthly(daily[,"Temp.2m.C"],mean)
+matrix(monthly.full[-49],ncol=4)
+rowMeans(matrix(monthly.full[-49],ncol=4))
+points(rowMeans(matrix(monthly.full[-49],ncol=4)),ylab = "Hőmérséklet  [°C]", xlab = "Hónapok", cex=1.5)
+
+##
+head(daily)
+apply.monthly(daily[,"Temp.min"],mean)
+monthly.fullmin<-apply.monthly(daily[,"Temp.min"],mean)
+matrix(monthly.full[-49],ncol=4)
+rowMeans(matrix(monthly.full[-49],ncol=4))
+points(rowMeans(matrix(monthly.full[-49],ncol=4)),ylab = "Hőmérséklet  [°C]", xlab = "Hónapok", cex=1.5)
+#
+
+
+##havi csap
+apply.monthly(daily[,1],sum)
+monthly.fullcs<-apply.monthly(daily[,1],sum)
+matrix(monthly.fullcs[-49],ncol=4)
+rowMeans(matrix(monthly.fullcs[-49],ncol=4))
+plot(rowMeans(matrix(monthly.fullcs[-49],ncol=4)),ylab = "Csapadék  [mm]", xlab = "Hónapok",type="h")

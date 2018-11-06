@@ -91,6 +91,7 @@ plot(prec.month, type="h")
 ## Napi adatsor mentése
 write.zoo(daily[,1], file = "KaszoNapiCsapi.csv", dec = ",")
 
+
 ## Hőmérséklet
 ## Napi átlag lefutása
 plot(daily[, "Temp.2m.C"])
@@ -109,10 +110,14 @@ sum(daily['2015-10-01/2016-09-30',1])
 sum(daily['2016-10-01/2017-09-30',1])
 sum(daily['2017-10-01/2018-09-30',1])
 
-plot(daily['2014-10-01/2015-09-30',1], type = "h")
+plot(daily['2014-10-01/2015-09-30',1],major.ticks="months",type = "h")
 plot(daily['2015-10-01/2016-09-30',1], type = "h")
 plot(daily['2016-10-01/2017-09-30',1], type = "h")
-plot(daily['2017-10-01/2018-09-30',1], type = "h")
+plot(daily['2017-10-01/2018-09-30',1], type = "h", main="", yaxis.sname=FALSE, on=NA)
+title("Napi csapadék és átlaghőmérséklet alakulása", sub= "2014-15 hidrológiai év")
+?plot.xts
+plot(index(daily['2017-10-01/2018-09-30']),coredata(daily['2017-10-01/2018-09-30',1]),type="h",ylab="",xlab="")
+axis.POSIXct()
 
 sum(daily['2014-10-01/2015-09-30',1]  > 20)
 sum(daily['2015-10-01/2016-09-30',1]  > 20)
@@ -135,4 +140,97 @@ sum(daily['2016-04-01/2016-09-30',1] > 20)
 sum(daily['2017-04-01/2017-09-30',1] > 20)
 sum(daily['2018-04-01/2018-09-30',1] > 20)
 # minimum h
-lines(daily['2018-04-01/2018-09-30', "Temp.min"],col="ivory2")
+lines(daily['2018-04-01/2018-09-30', "Temp.min"],col="ivory4")
+
+##havi hőm
+apply.monthly(daily[,"Temp.2m.C"],mean)
+monthly.full<-apply.monthly(daily[,"Temp.2m.C"],mean)
+matrix(monthly.full[-49],ncol=4)
+rowMeans(matrix(monthly.full[-49],ncol=4))
+points(rowMeans(matrix(monthly.full[-49],ncol=4)),ylab = "Hőmérséklet  [°C]", xlab = "Hónapok", cex=1.5)
+
+##
+head(daily)
+apply.monthly(daily[,"Temp.min"],mean)
+monthly.fullmin<-apply.monthly(daily[,"Temp.min"],mean)
+matrix(monthly.fullmin[-49],ncol=4)
+rowMeans(matrix(monthly.fullmin[-49],ncol=4))
+points(rowMeans(matrix(monthly.fullmin[-49],ncol=4)),ylab = "Hőmérséklet  [°C]", xlab = "Hónapok", cex=1.5)
+#
+apply.monthly(daily[,"Temp.max"],mean)
+monthly.fullmax<-apply.monthly(daily[,"Temp.max"],max)
+matrix(monthly.fullmax[-49],ncol=4)
+rowMeans(matrix(monthly.fullmax[-49],ncol=4))
+points(rowMeans(matrix(monthly.fullmax[-49],ncol=4)),ylab = "Hőmérséklet  [°C]", xlab = "Hónapok", cex=1.5)
+#
+
+
+##havi csap
+apply.monthly(daily[,1],sum)
+monthly.fullcs<-apply.monthly(daily[,1],sum)
+matrix(monthly.fullcs[-49],ncol=4)
+rowMeans(matrix(monthly.fullcs[-49],ncol=4))
+plot(rowMeans(matrix(monthly.fullcs[-49],ncol=4)),ylab = "Csapadék  [mm]", xlab = "Hónapok",type="h")
+
+
+##
+
+sum(daily["2014-10-01/2014-10-31",1] > 0)
+sum(daily["2014-11-01/2014-11-30",1] > 0)
+sum(daily["2014-12-01/2014-12-31",1] > 0)
+sum(daily["2015-01-01/2015-01-30",1] > 0)
+sum(daily["2015-02-01/2015-02-28",1] > 0)
+sum(daily["2015-03-01/2015-03-31",1] > 0)
+sum(daily["2015-04-01/2015-04-30",1] > 0)
+sum(daily["2015-05-01/2015-05-31",1] > 0)
+sum(daily["2015-06-01/2015-06-30",1] > 0)
+sum(daily["2015-07-01/2015-07-31",1] > 0)
+sum(daily["2015-08-01/2015-08-31",1] > 0)
+sum(daily["2015-09-01/2015-09-30",1] > 0)
+
+## 2015-16 hidrológiai év
+sum(daily["2015-10-01/2015-10-31",1] > 0)
+sum(daily["2015-11-01/2015-11-30",1] > 0)
+sum(daily["2015-12-01/2015-12-31",1] > 0)
+sum(daily["2016-01-01/2016-01-30",1] > 0)
+sum(daily["2016-02-01/2016-02-29",1] > 0)
+sum(daily["2016-03-01/2016-03-31",1] > 0)
+sum(daily["2016-04-01/2016-04-30",1] > 0)
+sum(daily["2016-05-01/2016-05-31",1] > 0)
+sum(daily["2016-06-01/2016-06-30",1] > 0)
+sum(daily["2016-07-01/2016-07-31",1] > 0)
+sum(daily["2016-08-01/2016-08-31",1] > 0)
+sum(daily["2016-09-01/2016-09-30",1] > 0)
+
+## 2016-17 hidrológai év
+sum(daily["2016-10-01/2016-10-31",1] > 0)
+sum(daily["2016-11-01/2016-11-30",1] > 0)
+sum(daily["2016-12-01/2016-12-31",1] > 0)
+sum(daily["2017-01-01/2017-01-30",1] > 0)
+sum(daily["2017-02-01/2017-02-28",1] > 0)
+sum(daily["2017-03-01/2017-03-31",1] > 0)
+sum(daily["2017-04-01/2017-04-30",1] > 0)
+sum(daily["2017-05-01/2017-05-31",1] > 0)
+sum(daily["2017-06-01/2017-06-30",1] > 0)
+sum(daily["2017-07-01/2017-07-31",1] > 0)
+sum(daily["2017-08-01/2017-08-31",1] > 0)
+sum(daily["2017-09-01/2017-09-30",1] > 0)
+
+sum(daily["2017-10-01/2017-10-31",1] > 0)
+sum(daily["2017-11-01/2017-11-30",1] > 0)
+sum(daily["2017-12-01/2017-12-31",1] > 0)
+sum(daily["2018-01-01/2018-01-30",1] > 0)
+sum(daily["2018-02-01/2018-02-28",1] > 0)
+sum(daily["2018-03-01/2018-03-31",1] > 0)
+sum(daily["2018-04-01/2018-04-30",1] > 0)
+sum(daily["2018-05-01/2018-05-31",1] > 0)
+sum(daily["2018-06-01/2018-06-30",1] > 0)
+sum(daily["2018-07-01/2018-07-31",1] > 0)
+sum(daily["2018-08-01/2018-08-31",1] > 0)
+sum(daily["2018-09-01/2018-09-30",1] > 0)
+
+sum(daily["2014-10-01/2015-09-30",1] > 0)
+sum(daily["2015-10-01/2016-09-30",1] > 0)
+sum(daily["2016-10-01/2017-09-30",1] > 0)
+sum(daily["2017-10-01/2018-09-30",1] > 0)
+sum(daily["2014-10-01/2018-09-30",1] > 0)

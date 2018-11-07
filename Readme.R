@@ -90,13 +90,15 @@ prec.month <- apply.monthly(daily[,1],sum)
 plot(prec.month, type="h")
 ## Napi adatsor mentése
 write.zoo(daily[,1], file = "KaszoNapiCsapi.csv", dec = ",")
-
+plot(daily[,1])
 
 ## Hőmérséklet
 ## Napi átlag lefutása
 plot(daily[, "Temp.2m.C"])
 ## Napi adatsor mentése
 write.zoo(round(daily[, "Temp.2m.C"],2), file = "KaszoNapiTemp.csv", dec = ",")
+write.zoo(round(daily[, "Temp.max"],2), file = "KaszoNapiMax.csv", dec = ",")
+head(daily)
 ## Minimum-maximum is rajta
 plot(daily[, "Temp.2m.C"], ylim = c(min(daily[, "Temp.min"]), max(daily[, "Temp.max"])), col="ivory4")
 lines(daily[, "Temp.min"],col="ivory2")
@@ -194,20 +196,20 @@ points(rowMeans(matrix(monthly.fullmax[-49],ncol=4)),ylab = "Hőmérséklet  [°
 #
 
 
-##havi csap
+##havi csap átlag
 apply.monthly(daily[,1],sum)
 monthly.fullcs<-apply.monthly(daily[,1],sum)
 matrix(monthly.fullcs[-49],ncol=4)
 rowMeans(matrix(monthly.fullcs[-49],ncol=4))
 plot(rowMeans(matrix(monthly.fullcs[-49],ncol=4)),ylab = "Csapadék  [mm]", xlab = "Hónapok",type="h")
-
+plot(monthly.fullcs < 25)
 
 ##
 
 sum(daily["2014-10-01/2014-10-31",1] > 0)
 sum(daily["2014-11-01/2014-11-30",1] > 0)
 sum(daily["2014-12-01/2014-12-31",1] > 0)
-sum(daily["2015-01-01/2015-01-31",1] > 0)
+sum(daily["2015-01-01/2015-01-30",1] > 0)
 sum(daily["2015-02-01/2015-02-28",1] > 0)
 sum(daily["2015-03-01/2015-03-31",1] > 0)
 sum(daily["2015-04-01/2015-04-30",1] > 0)
@@ -221,7 +223,7 @@ sum(daily["2015-09-01/2015-09-30",1] > 0)
 sum(daily["2015-10-01/2015-10-31",1] > 0)
 sum(daily["2015-11-01/2015-11-30",1] > 0)
 sum(daily["2015-12-01/2015-12-31",1] > 0)
-sum(daily["2016-01-01/2016-01-31",1] > 0)
+sum(daily["2016-01-01/2016-01-30",1] > 0)
 sum(daily["2016-02-01/2016-02-29",1] > 0)
 sum(daily["2016-03-01/2016-03-31",1] > 0)
 sum(daily["2016-04-01/2016-04-30",1] > 0)
@@ -235,7 +237,7 @@ sum(daily["2016-09-01/2016-09-30",1] > 0)
 sum(daily["2016-10-01/2016-10-31",1] > 0)
 sum(daily["2016-11-01/2016-11-30",1] > 0)
 sum(daily["2016-12-01/2016-12-31",1] > 0)
-sum(daily["2017-01-01/2017-01-31",1] > 0)
+sum(daily["2017-01-01/2017-01-30",1] > 0)
 sum(daily["2017-02-01/2017-02-28",1] > 0)
 sum(daily["2017-03-01/2017-03-31",1] > 0)
 sum(daily["2017-04-01/2017-04-30",1] > 0)
@@ -248,7 +250,7 @@ sum(daily["2017-09-01/2017-09-30",1] > 0)
 sum(daily["2017-10-01/2017-10-31",1] > 0)
 sum(daily["2017-11-01/2017-11-30",1] > 0)
 sum(daily["2017-12-01/2017-12-31",1] > 0)
-sum(daily["2018-01-01/2018-01-31",1] > 0)
+sum(daily["2018-01-01/2018-01-30",1] > 0)
 sum(daily["2018-02-01/2018-02-28",1] > 0)
 sum(daily["2018-03-01/2018-03-31",1] > 0)
 sum(daily["2018-04-01/2018-04-30",1] > 0)
@@ -264,8 +266,8 @@ sum(daily["2016-10-01/2017-09-30",1] > 0)
 sum(daily["2017-10-01/2018-09-30",1] > 0)
 sum(daily["2014-10-01/2018-09-30",1] > 0)
 
-<<<<<<< HEAD
 ##aszály
+plot(daily["2014-05-01/2014-09-30",1])
 aszalyhomerseklet<-daily["2014-10-01/2018-09-30","Temp.max"] > 31
 aszalyhomerseklet
 plot(aszalyhomerseklet)
@@ -284,5 +286,11 @@ aszalyhomerseklet4<-daily["2018-06-01/2018-09-17","Temp.max"] > 31
 plot(aszalyhomerseklet4)
 aszalyhomerseklet4
 
-## 2015/16 havonta másként
-apply.monthly(daily["2015-10-01/2016-09-30",1] > 0,sum)
+plot(monthly.fullcs < 25)
+plot(daily[,"Sunshine.secs"])
+
+plot(daily[,"RH.."])
+plot(daily[,"Iavg.W.m2"])
+plot(daily[,"Press.mbar"])
+plot(daily[,"WindA.m.s"])
+plot(daily[,"WDirA.gr."])

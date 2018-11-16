@@ -98,9 +98,20 @@ plot(daily[, "Temp.2m.C"])
 ## Napi adatsor mentése
 write.zoo(round(daily[, "Temp.2m.C"],2), file = "KaszoNapiTemp.csv", dec = ",")
 ## Minimum-maximum is rajta
-plot(daily[, "Temp.2m.C"], ylim = c(min(daily[, "Temp.min"]), max(daily[, "Temp.max"])), col="ivory4")
+plot(daily[, "Temp.2m.C"], ylim = c(min(daily[, "Temp.min"], na.rm=T), max(daily[, "Temp.max"],na.rm=T)), col="ivory4")
 lines(daily[, "Temp.min"],col="ivory2")
 lines(daily[, "Temp.max"],col="black")
+
+ttpolyhoz <- data.frame(x = c(index(daily),index(daily)[nrow(daily):1]),
+                        y = c(coredata(daily[, "Temp.min"]), coredata(daily[, "Temp.max"])[nrow(daily):1]))
+ttpolyhoz <- na.omit(ttpolyhoz)
+plot(index(daily),daily[, "Temp.2m.C"], ylim = c(min(daily[, "Temp.min"], na.rm=T), max(daily[, "Temp.max"],na.rm=T)), type="n", xaxs="i",
+     xlab="", ylab="Hőrméséklet")
+polygon(ttpolyhoz, col = "ivory4", border = NA)
+lines(index(daily),daily[, "Temp.2m.C"], col="black", lwd=2 )
+## Controll
+## lines(index(daily),daily[, "Temp.min"],col="red")
+## lines(index(daily),daily[, "Temp.max"],col="red")
 
 ## Indexeles
 plot(daily['2015-10-01/2016-09-30',1], type="h")

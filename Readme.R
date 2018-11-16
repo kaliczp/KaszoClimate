@@ -102,24 +102,43 @@ plot(daily[, "Temp.2m.C"], ylim = c(min(daily[, "Temp.min"], na.rm=T), max(daily
 lines(daily[, "Temp.min"],col="ivory2")
 lines(daily[, "Temp.max"],col="black")
 
+dailytemps.withDate <- xts(coredata(daily[, c("Temp.2m.C", "Temp.min", "Temp.max")]),
+                           order.by = as.Date(index(daily)))
 ## Napi átlag a napi maximummal-minimummal
 plot.tempmaxmin <- function(x, ylab="Hőmérséklet") {
+    par(las=2, mar=c(4.1,3.9,.5,.5))
     maxdata <- max(x, na.rm = TRUE)
     mindata <- min(x, na.rm = TRUE)
-ttpolyhoz <- data.frame(x = c(index(daily),index(daily)[nrow(daily):1]),
-                        y = c(coredata(daily[, "Temp.min"]), coredata(daily[, "Temp.max"])[nrow(daily):1]))
-ttpolyhoz <- na.omit(ttpolyhoz)
-    plot(index(daily),daily[, "Temp.2m.C"], ylim = c(mindata, maxdata),
-         type="n", xaxs="i",
+    ttpolyhoz <- data.frame(x = c(index(x),index(x)[nrow(x):1]),
+                        y = c(coredata(x[, 2]), coredata(x[, 3])[nrow(x):1]))
+    ttpolyhoz <- na.omit(ttpolyhoz)
+    plot(index(x),x[, 1], ylim = c(mindata, maxdata),
+         type="n", xaxs="i", xaxt="n",
          xlab = "", ylab = ylab)
-polygon(ttpolyhoz, col = "ivory4", border = NA)
-lines(index(daily),daily[, "Temp.2m.C"], col="black", lwd=2 )
+    ts.start <- as.Date(trunc(as.POSIXct(start(x)), unit="months"))
+    ts.end <- as.Date(trunc(as.POSIXct(end(x)), unit="months"))
+    ts.month <- seq(ts.start,ts.end, by="months")[-1]
+    grid(nx=NA, ny=NULL, lty = "solid")
+    axis(1, at = ts.month, lab=F, col="lightgray", tck=1)
+    axis(1, at = ts.month, lab=F)
+    par(mgp=c(3,0.4,0))
+    axis.Date(1, x = ts.month, at=ts.month+15, format="%b", tcl=0)
+    par(mgp=c(3,2,0),las=0)
+    year.start <- as.numeric(format(ts.start, format="%Y"))
+    year.end <- as.numeric(format(ts.end, format="%Y"))
+    date.to.year <- as.Date(paste0(year.start:year.end,"-01-01"))
+    axis.Date(1,date.to.year, at=date.to.year + c(250,rep(180,4)),padj=1, tcl=0)
+    polygon(ttpolyhoz, col = "ivory4", border = NA)
+    lines(index(x),x[, 1], col="black", lwd=2 )
+    box()
+    par(mgp=c(3,1,0))
 }
 
-plot.tempmaxmin(daily[, c("Temp.2m.C", "Temp.min", "Temp.max")])
+plot.tempmaxmin(dailytemps.withDate)
+
 ## Controll
-## lines(index(daily),daily[, "Temp.min"],col="red")
-## lines(index(daily),daily[, "Temp.max"],col="red")
+## lines(index(dailytemps.withDate),dailytemps.withDate[, 2],col="red")
+## lines(index(dailytemps.withDate),dailytemps.withDate[, 3],col="red")
 
 ## Indexeles
 plot(daily['2015-10-01/2016-09-30',1], type="h")

@@ -102,13 +102,21 @@ plot(daily[, "Temp.2m.C"], ylim = c(min(daily[, "Temp.min"], na.rm=T), max(daily
 lines(daily[, "Temp.min"],col="ivory2")
 lines(daily[, "Temp.max"],col="black")
 
+## Napi átlag a napi maximummal-minimummal
+plot.tempmaxmin <- function(x, ylab="Hőmérséklet") {
+    maxdata <- max(x, na.rm = TRUE)
+    mindata <- min(x, na.rm = TRUE)
 ttpolyhoz <- data.frame(x = c(index(daily),index(daily)[nrow(daily):1]),
                         y = c(coredata(daily[, "Temp.min"]), coredata(daily[, "Temp.max"])[nrow(daily):1]))
 ttpolyhoz <- na.omit(ttpolyhoz)
-plot(index(daily),daily[, "Temp.2m.C"], ylim = c(min(daily[, "Temp.min"], na.rm=T), max(daily[, "Temp.max"],na.rm=T)), type="n", xaxs="i",
-     xlab="", ylab="Hőrméséklet")
+    plot(index(daily),daily[, "Temp.2m.C"], ylim = c(mindata, maxdata),
+         type="n", xaxs="i",
+         xlab = "", ylab = ylab)
 polygon(ttpolyhoz, col = "ivory4", border = NA)
 lines(index(daily),daily[, "Temp.2m.C"], col="black", lwd=2 )
+}
+
+plot.tempmaxmin(daily[, c("Temp.2m.C", "Temp.min", "Temp.max")])
 ## Controll
 ## lines(index(daily),daily[, "Temp.min"],col="red")
 ## lines(index(daily),daily[, "Temp.max"],col="red")
